@@ -6,8 +6,6 @@
 <body>
 <h1>SpringMVC localization example</h1>
 ${appUrl}<br>
-${mb}<br>
-${mb.message}<br>
-<a href="${appUrl}/logon">login</a>
+<a href="${appUrl}/login">login</a>
 </body>
 </html>

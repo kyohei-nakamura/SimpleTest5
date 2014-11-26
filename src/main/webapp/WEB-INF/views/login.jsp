@@ -8,13 +8,10 @@
 <body>
 <h1>SpringMVC localization example</h1>
 <spring:message code="global.username"/>
-<form:form modelAttribute="mb" action="${appUrl}/login" method="POST">
-<form:errors path="message"/><p>
-<form:input path="message"/>
+<form:form modelAttribute="viewordownload" action="${appUrl}/login" method="POST">
+<form:radiobutton path="view" value="on" label="View"/><br>
+<form:radiobutton path="download" value="on" label="Download"/><br>
 <input type="submit">
 </form:form>
-${requestScope.mb}<br>
-
-${fn:escapeXml('<a href="http://www.google.com">Google</a>')}<br>
 </body>
 </html>

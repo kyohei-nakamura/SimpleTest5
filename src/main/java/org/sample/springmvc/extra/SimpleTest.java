@@ -1,5 +1,12 @@
 package org.sample.springmvc.extra;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +23,25 @@ import org.springframework.web.servlet.ModelAndView;
 @Scope("prototype")
 @RequestMapping("/login")
 public class SimpleTest {
-    @Autowired MessageBean mb;
+    @Autowired ServletContext context;
 
     @RequestMapping(method=RequestMethod.GET)
-    public void login(/*Model model*/) {
+    public void login(Model model) {
+        model.addAttribute("viewordownload", new ViewOrDownload());
     }
     
-    @RequestMapping(method=RequestMethod.POST)
-    public void execute2(Model model, @Valid @ModelAttribute("mb") MessageBean mb, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            model.addAllAttributes(bindingResult.getModel());
-        }
+    @RequestMapping(method=RequestMethod.POST, params="view")
+    public String view() {
+        return "welcome";
+    }
+    
+    @RequestMapping(method=RequestMethod.POST, params="download")
+    public void download(HttpServletResponse response) throws IOException {
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-disposition", "attachment; filename="
+                    + "fileABC.txt");
+            String path = context.getRealPath("/WEB-INF/download.txt");
+            Path src = Paths.get(path);
+            Files.copy(src, response.getOutputStream());
     }
 }

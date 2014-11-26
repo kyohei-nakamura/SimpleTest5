@@ -1,16 +1,13 @@
 package org.sample.springmvc.config;
 
-import org.sample.springmvc.extra.MessageBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -39,13 +36,5 @@ public class AppConfig extends WebMvcConfigurationSupport {
         messageSource.setBasenames("WEB-INF/classes/i18n/global");
         messageSource.setFallbackToSystemLocale(false);
         return messageSource;
-    }
-    
-//    @Bean(name = "mb")
-//    @Scope("request")
-    public MessageBean message() {
-        MessageBean messageBean = new MessageBean();
-        messageBean.setMessage("Hello World!");
-        return messageBean;
     }
 }
