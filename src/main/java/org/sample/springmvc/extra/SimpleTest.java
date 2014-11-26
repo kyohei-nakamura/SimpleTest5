@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@Scope("prototype")
 @RequestMapping("/login")
 public class SimpleTest {
     @Autowired ServletContext context;
@@ -30,12 +29,12 @@ public class SimpleTest {
         model.addAttribute("viewordownload", new ViewOrDownload());
     }
     
-    @RequestMapping(method=RequestMethod.POST, params="view")
+    @RequestMapping(method=RequestMethod.POST, params="checked=view")
     public String view() {
         return "welcome";
     }
     
-    @RequestMapping(method=RequestMethod.POST, params="download")
+    @RequestMapping(method=RequestMethod.POST, params="checked=download")
     public void download(HttpServletResponse response) throws IOException {
             response.setContentType("application/octet-stream");
             response.setHeader("Content-disposition", "attachment; filename="
