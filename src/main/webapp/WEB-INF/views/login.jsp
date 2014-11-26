@@ -15,7 +15,8 @@
 <spring:message code="global.username"/>
 <form:form modelAttribute="viewordownload" action="${appUrl}/login" method="POST">
 <form:radiobutton path="checked" value="view" label="View"/><br>
-<form:radiobutton path="checked" value="download" label="Download"/><br>
+<form:radiobutton path="checked" value="download1" label="Download1"/><br>
+<form:radiobutton path="checked" value="download2" label="Download2"/><br>
 <input type="submit">
 </form:form>
 </body>
