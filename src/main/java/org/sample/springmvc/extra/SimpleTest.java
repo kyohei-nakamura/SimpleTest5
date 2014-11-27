@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -50,6 +51,25 @@ public class SimpleTest {
     @RequestMapping(method = RequestMethod.POST, params = "checked=download2")
     public ResponseEntity<String> download2() throws IOException {
         System.out.println("Download2");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "octet-stream"));
+        headers.set("Content-Disposition", "attachment; filename=fileABC.txt");
+        String path = context.getRealPath("/WEB-INF/download.txt");
+        Path src = Paths.get(path);
+        String data;
+        try (Stream<String> stream = Files.lines(src)) {
+            data = stream.collect(Collectors.joining("\n"));
+        }
+        return new ResponseEntity<String>(data, headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(method = RequestMethod.POST)
+    public Object downloadOrView(@ModelAttribute("checked") String checked) throws IOException {
+        if("view2".equals(checked)) {
+            return "welcome";
+        }
+
+        System.out.println("Download3");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "octet-stream"));
         headers.set("Content-Disposition", "attachment; filename=fileABC.txt");
